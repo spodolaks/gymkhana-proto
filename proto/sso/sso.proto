@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package mgymkhanaproto;
 
-option go_package = "github.com/spodolaks/mgymkhana/proto";
+option go_package = "github.com/spodolaks/mgymkhana-proto";
 
 message User {
   string id = 1;
