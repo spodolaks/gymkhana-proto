@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package gymkhanaproto;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/spodolaks/mgymkhana/proto";
+
+service CompetitionService {
+    rpc Competition (CompetitionRequest) returns (CompetitionResponse) {}
+    rpc CompetitionStages(CompetitionRequest) returns (stream CompetitionStage) {}
+    rpc ListCompetitions (CompetitionListRequest) returns (stream CompetitionResponse) {}
+    rpc CreateCompetition (CompetitionCreateRequest) returns (CompetitionResponse) {}
+    rpc UpdateCompetition (CompetitionUpdateRequest) returns (CompetitionResponse) {}
+    rpc DeleteCompetition (CompetitionRequest) returns (CompetitionResponse) {}
+}
+
+message Competition{
+    string id = 1;
+    string name = 5;
+    string description = 10;
+    string location_id = 15;
+    google.protobuf.Timestamp start = 20;
+    google.protobuf.Timestamp end = 25;
+    string parent_id = 30;
+    string course = 35;
+}
+
+message CompetitionCreateRequest {
+    Competition competition = 1;
+}
+
+message CompetitionUpdateRequest {
+    Competition competition = 1;
+}
+
+message CompetitionResponse {
+    Competition competition = 1;
+}
+
+message CompetitionRequest {
+    string id = 1;
+}
+
+message CompetitionStages {
+    string id = 1;
+}
+
+message CompetitionStage {
+    Competition competition = 1;
+}
+
+message CompetitionListRequest {
+    string filter = 1;
+}
+
+
+

@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package mgymkhanaproto;
+
+option go_package = "github.com/spodolaks/mgymkhana/proto";
+
+message User {
+  string id = 1;
+  string name = 5;
+  string surname = 7;
+  string nickname = 8;
+  string email = 12;
+  string phone = 13;
+}
+
+service SSOService {
+    rpc Register(RegisterRequest) returns (RegisterResponse) {}
+    rpc Login(LoginRequest) returns (LoginResponse) {}
+}
+
+message RegisterRequest {
+  string name = 5;
+  string surname = 7;
+  string nickname = 8;
+  string email = 12;
+  string phone = 13;
+}
+
+message RegisterResponse {
+    string id = 1;
+}
+
+message LoginRequest {
+    string email = 12;
+    string password = 13;
+}
+
+message LoginResponse {
+    string token = 1;
+}
+

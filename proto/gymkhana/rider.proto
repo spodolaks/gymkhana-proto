@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package mgymkhanaproto;
+
+option go_package = "github.com/spodolaks/mgymkhana/proto";
+
+service RiderService{
+    rpc Create(CreateRiderRequest) returns (CreateRiderResponse);
+    rpc Riders(RidersRequest) returns (stream RidersResponse);
+    rpc Rider(RiderRequest) returns (RiderResponse);
+    rpc Update(UpdateRiderRequest) returns (UpdateRiderResponse);
+    rpc Delete(DeleteRiderRequest) returns (DeleteRiderResponse);
+}
+
+message Rider{
+    string user_id = 1;
+    string name = 3;
+    string surname = 5;
+    string location_id = 9;
+    string nickname = 12;
+    string email = 10;
+    string phone = 20;
+    int32 age = 40;
+    int32 weight = 50;
+    int32 height = 60;
+    string rank = 70;
+}
+
+message DeleteRiderRequest{
+    string rider_id = 1;
+}
+
+message DeleteRiderResponse{
+    string rider_id = 1;
+}
+
+message UpdateRiderResponse{
+    string rider_id = 1;
+}
+
+message RidersRequest{
+    string filter = 1;
+}
+
+message RidersResponse{
+    repeated Rider Rider = 1;
+}
+
+message RiderRequest{
+    string rider_id = 1;
+}
+
+message RiderResponse{
+    Rider Rider = 1;
+}
+
+message UpdateRiderRequest{
+    Rider Rider = 1;
+}
+
+message CreateRiderRequest{
+    Rider Rider = 1;
+}
+
+message CreateRiderResponse{
+    string rider_id = 1;
+}
