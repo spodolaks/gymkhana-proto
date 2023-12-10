@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package mgymkhanaproto;
+package sso;
 
-option go_package = "github.com/spodolaks/mgymkhana-proto";
+option go_package = "spodolaks.sso.v1;ssov1";
 
 message User {
   string id = 1;

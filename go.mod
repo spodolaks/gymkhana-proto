@@ -1,4 +1,4 @@
-module github.com/spodolaks/mgymkhana-proto
+module github.com/spodolaks/gymkhana-proto
 
 go 1.21.4
 
