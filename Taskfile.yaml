@@ -4,8 +4,8 @@ tasks:
   generate:
     desc: Generate Go files from proto files, without the proto folder prefix
     cmds:
-      - protoc -I proto proto/gymkhana/competition.proto --go_out=./gen/v1/go/gymkhana --go_opt=paths=source_relative --go-grpc_out=./gen/v1/go/gymkhana --go-grpc_opt=paths=source_relative
-      - protoc -I proto proto/gymkhana/rider.proto --go_out=./gen/v1/go/gymkhana --go_opt=paths=source_relative --go-grpc_out=./gen/v1/go/gymkhana --go-grpc_opt=paths=source_relative
-      - protoc -I proto proto/sso/sso.proto --go_out=./gen/v1/go/sso --go_opt=paths=source_relative --go-grpc_out=./gen/v1/go/sso --go-grpc_opt=paths=source_relative
+      - protoc -I proto proto/gymkhana/competition.proto --go_out=./gen/v1/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/v1/go/ --go-grpc_opt=paths=source_relative
+      - protoc -I proto proto/gymkhana/rider.proto --go_out=./gen/v1/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/v1/go/ --go-grpc_opt=paths=source_relative
+      - protoc -I proto proto/sso/sso.proto --go_out=./gen/v1/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/v1/go/ --go-grpc_opt=paths=source_relative
       # Find all .proto files, then generate Go files with the correct directory structure
       #- find ./proto -name '*.proto' -exec sh -c 'protoc --proto_path=./proto --go_out=paths=source_relative:./gen/v1/go $0' --{} \;
