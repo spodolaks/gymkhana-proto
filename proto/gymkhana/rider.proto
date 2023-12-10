@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package gymkhana;
 
-option go_package = "github.com/spodolaks/gymkhana-proto/gymkhana;gymkhana";
+option go_package = "spodolaks.gymkhana.v1;gymkhanav1";
 
 service RiderService{
     rpc Create(CreateRiderRequest) returns (CreateRiderResponse);
