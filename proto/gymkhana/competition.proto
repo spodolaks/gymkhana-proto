@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package mgymkhanaproto;
+package gymkhana;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/spodolaks/mgymkhana-proto";
+option go_package = "github.com/spodolaks/mgymkhana-proto/gymkhana";
 
 service CompetitionService {
     rpc Competition (CompetitionRequest) returns (CompetitionResponse) {}

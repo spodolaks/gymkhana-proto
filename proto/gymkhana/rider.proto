@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package mgymkhanaproto;
+package gymkhana;
 
-option go_package = "github.com/spodolaks/mgymkhana-proto";
+option go_package = "github.com/spodolaks/mgymkhana-proto/gymkhana";
 
 service RiderService{
     rpc Create(CreateRiderRequest) returns (CreateRiderResponse);
