@@ -4,7 +4,7 @@ package gymkhana;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/spodolaks/mgymkhana-proto/gymkhana";
+option go_package = "github.com/spodolaks/mgymkhana-proto/gymkhana;gymkhana";
 
 service CompetitionService {
     rpc Competition (CompetitionRequest) returns (CompetitionResponse) {}
