@@ -4,7 +4,7 @@
 // - protoc             v4.25.1
 // source: gymkhana/competition.proto
 
-package gymkhanav1
+package gymkhana
 
 import (
 	context "context"

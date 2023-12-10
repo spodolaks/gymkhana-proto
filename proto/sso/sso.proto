@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package sso;
 
-option go_package = "spodolaks.sso.v1;ssov1";
+option go_package = "github.com/spodolaks/gymkhana-proto/gen/v1/go/gymkhana;gymkhana";
 
 message User {
   string id = 1;

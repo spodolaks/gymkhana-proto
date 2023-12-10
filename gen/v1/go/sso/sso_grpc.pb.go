@@ -4,7 +4,7 @@
 // - protoc             v4.25.1
 // source: sso/sso.proto
 
-package ssov1
+package gymkhana
 
 import (
 	context "context"
