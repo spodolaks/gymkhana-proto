@@ -5,6 +5,6 @@ tasks:
     desc: Generate Go files from proto files, without the proto folder prefix
     cmds:
       # Find all .proto files, then generate Go files with the correct directory structure
-      - find ./proto -name '*.proto' -exec sh -c 'protoc --proto_path=./proto --go_out=paths=source_relative:./gen $0' {} \;
+      - find ./proto -name '*.proto' -exec sh -c 'protoc --proto_path=./proto --go_out=paths=source_relative:./gen/go/v1 $0' {} \;
     generates:
       - gen/**/*.pb.go
