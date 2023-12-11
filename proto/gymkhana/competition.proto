@@ -8,8 +8,8 @@ option go_package = "github.com/spodolaks/gymkhana-proto/gen/v1/go/gymkhana;gymk
 
 service CompetitionService {
     rpc Competition (CompetitionRequest) returns (CompetitionResponse) {}
-    rpc CompetitionStages(CompetitionRequest) returns (stream CompetitionStage) {}
-    rpc ListCompetitions (CompetitionListRequest) returns (stream CompetitionResponse) {}
+    rpc CompetitionStages(CompetitionRequest) returns (CompetitionListResponse) {}
+    rpc ListCompetitions (CompetitionListRequest) returns (CompetitionListResponse) {}
     rpc CreateCompetition (CompetitionCreateRequest) returns (CompetitionResponse) {}
     rpc UpdateCompetition (CompetitionUpdateRequest) returns (CompetitionResponse) {}
     rpc DeleteCompetition (CompetitionRequest) returns (CompetitionResponse) {}
@@ -25,6 +25,7 @@ message Competition{
     string parent_id = 30;
     string course = 35;
 }
+
 
 message CompetitionCreateRequest {
     Competition competition = 1;
@@ -42,8 +43,8 @@ message CompetitionRequest {
     string id = 1;
 }
 
-message CompetitionStages {
-    string id = 1;
+message CompetitionStagesResponse {
+    repeated Competition competition = 1;
 }
 
 message CompetitionStage {
@@ -52,6 +53,10 @@ message CompetitionStage {
 
 message CompetitionListRequest {
     string filter = 1;
+}
+
+message CompetitionListResponse {
+    repeated Competition competition = 1;
 }
 
 
