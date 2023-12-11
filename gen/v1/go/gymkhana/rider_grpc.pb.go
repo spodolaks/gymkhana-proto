@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RiderServiceClient interface {
 	Create(ctx context.Context, in *CreateRiderRequest, opts ...grpc.CallOption) (*CreateRiderResponse, error)
-	Riders(ctx context.Context, in *RidersRequest, opts ...grpc.CallOption) (RiderService_RidersClient, error)
+	Riders(ctx context.Context, in *RidersRequest, opts ...grpc.CallOption) (*RidersResponse, error)
 	Rider(ctx context.Context, in *RiderRequest, opts ...grpc.CallOption) (*RiderResponse, error)
 	Update(ctx context.Context, in *UpdateRiderRequest, opts ...grpc.CallOption) (*UpdateRiderResponse, error)
 	Delete(ctx context.Context, in *DeleteRiderRequest, opts ...grpc.CallOption) (*DeleteRiderResponse, error)
@@ -46,36 +46,13 @@ func (c *riderServiceClient) Create(ctx context.Context, in *CreateRiderRequest,
 	return out, nil
 }
 
-func (c *riderServiceClient) Riders(ctx context.Context, in *RidersRequest, opts ...grpc.CallOption) (RiderService_RidersClient, error) {
-	stream, err := c.cc.NewStream(ctx, &RiderService_ServiceDesc.Streams[0], "/gymkhana.RiderService/Riders", opts...)
+func (c *riderServiceClient) Riders(ctx context.Context, in *RidersRequest, opts ...grpc.CallOption) (*RidersResponse, error) {
+	out := new(RidersResponse)
+	err := c.cc.Invoke(ctx, "/gymkhana.RiderService/Riders", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &riderServiceRidersClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type RiderService_RidersClient interface {
-	Recv() (*RidersResponse, error)
-	grpc.ClientStream
-}
-
-type riderServiceRidersClient struct {
-	grpc.ClientStream
-}
-
-func (x *riderServiceRidersClient) Recv() (*RidersResponse, error) {
-	m := new(RidersResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+	return out, nil
 }
 
 func (c *riderServiceClient) Rider(ctx context.Context, in *RiderRequest, opts ...grpc.CallOption) (*RiderResponse, error) {
@@ -110,7 +87,7 @@ func (c *riderServiceClient) Delete(ctx context.Context, in *DeleteRiderRequest,
 // for forward compatibility
 type RiderServiceServer interface {
 	Create(context.Context, *CreateRiderRequest) (*CreateRiderResponse, error)
-	Riders(*RidersRequest, RiderService_RidersServer) error
+	Riders(context.Context, *RidersRequest) (*RidersResponse, error)
 	Rider(context.Context, *RiderRequest) (*RiderResponse, error)
 	Update(context.Context, *UpdateRiderRequest) (*UpdateRiderResponse, error)
 	Delete(context.Context, *DeleteRiderRequest) (*DeleteRiderResponse, error)
@@ -124,8 +101,8 @@ type UnimplementedRiderServiceServer struct {
 func (UnimplementedRiderServiceServer) Create(context.Context, *CreateRiderRequest) (*CreateRiderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
-func (UnimplementedRiderServiceServer) Riders(*RidersRequest, RiderService_RidersServer) error {
-	return status.Errorf(codes.Unimplemented, "method Riders not implemented")
+func (UnimplementedRiderServiceServer) Riders(context.Context, *RidersRequest) (*RidersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Riders not implemented")
 }
 func (UnimplementedRiderServiceServer) Rider(context.Context, *RiderRequest) (*RiderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Rider not implemented")
@@ -167,25 +144,22 @@ func _RiderService_Create_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RiderService_Riders_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(RidersRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
+func _RiderService_Riders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RidersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
 	}
-	return srv.(RiderServiceServer).Riders(m, &riderServiceRidersServer{stream})
-}
-
-type RiderService_RidersServer interface {
-	Send(*RidersResponse) error
-	grpc.ServerStream
-}
-
-type riderServiceRidersServer struct {
-	grpc.ServerStream
-}
-
-func (x *riderServiceRidersServer) Send(m *RidersResponse) error {
-	return x.ServerStream.SendMsg(m)
+	if interceptor == nil {
+		return srv.(RiderServiceServer).Riders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/gymkhana.RiderService/Riders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RiderServiceServer).Riders(ctx, req.(*RidersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _RiderService_Rider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -254,6 +228,10 @@ var RiderService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _RiderService_Create_Handler,
 		},
 		{
+			MethodName: "Riders",
+			Handler:    _RiderService_Riders_Handler,
+		},
+		{
 			MethodName: "Rider",
 			Handler:    _RiderService_Rider_Handler,
 		},
@@ -266,12 +244,6 @@ var RiderService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _RiderService_Delete_Handler,
 		},
 	},
-	Streams: []grpc.StreamDesc{
-		{
-			StreamName:    "Riders",
-			Handler:       _RiderService_Riders_Handler,
-			ServerStreams: true,
-		},
-	},
+	Streams:  []grpc.StreamDesc{},
 	Metadata: "gymkhana/rider.proto",
 }

@@ -6,7 +6,7 @@ option go_package = "github.com/spodolaks/gymkhana-proto/gen/v1/go/gymkhana;gymk
 
 service RiderService{
     rpc Create(CreateRiderRequest) returns (CreateRiderResponse);
-    rpc Riders(RidersRequest) returns (stream RidersResponse);
+    rpc Riders(RidersRequest) returns (RidersResponse);
     rpc Rider(RiderRequest) returns (RiderResponse);
     rpc Update(UpdateRiderRequest) returns (UpdateRiderResponse);
     rpc Delete(DeleteRiderRequest) returns (DeleteRiderResponse);
